@@ -34,38 +34,44 @@ export class SlothRadio {
         this.currentPercentage = 0
         this.isPlaylistActive = false
         this.playlistCompleted = false
+        this.updateTick
 
         this.player.on(AudioPlayerStatus.Idle, async () => {
             await this.nextTrack()
             this.update()
         })
-
-        setInterval(() => {
-            this.update()
-        }, 2500)
     }
 
     refresh = async () => {
         if (this.display !== undefined) {
-            this.display.delete()
+            clearInterval(this.updateTick)
+            await this.display.delete()
         }
 
         this.display = await this.channel.send({
             embeds: [await this.buildDisplay()],
         })
 
-        await this.display.react('⏮️')
-        await this.display.react('⏯️')
-        await this.display.react('⏭️')
-        await this.display.react('🔀')
-        await this.display.react('📜')
-        await this.display.react('📥')
-        await this.display.react('❌')
+        this.updateTick = setInterval(() => {
+            this.update()
+        }, 2500)
+
+        try {
+            await this.display.react('⏮️')
+            await this.display.react('⏯️')
+            await this.display.react('⏭️')
+            await this.display.react('🔀')
+            await this.display.react('📜')
+            await this.display.react('📥')
+            await this.display.react('❌')
+        } catch (e) {}
     }
 
     update = async () => {
-        if (this.display !== undefined) {
-            this.display.edit({ embeds: [await this.buildDisplay()] })
+        if (this.display !== undefined && this.updateTick !== undefined) {
+            try {
+                await this.display.edit({ embeds: [await this.buildDisplay()] })
+            } catch (e) {}
         }
     }
 
@@ -335,7 +341,12 @@ export class SlothRadio {
     }
 
     buildPlaylistView = (tagCurrent = false, limit = 1024) => {
-        let playlistView = tagCurrent ? '➡ - ' : ''
+        let playlistView =
+            this.player.state.status === AudioPlayerStatus.Playing
+                ? tagCurrent
+                    ? '➡ - '
+                    : ''
+                : ''
         let playlistLength = 0
 
         let gap = 0

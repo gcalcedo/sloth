@@ -6,7 +6,7 @@ const require = createRequire(import.meta.url)
 const { token } = require('../config.json')
 
 import { CommandPipe } from './commandHandling/commandPipe.js'
-import { SlothStation } from './zenRadio/slothStation.js'
+import { SlothStation } from './slothRadio/slothStation.js'
 
 export const client = new Discord.Client({ intents })
 client.zenStation = new SlothStation(client)
