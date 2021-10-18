@@ -37,7 +37,7 @@ To play a song, connect to a voice channel and type a command following this tem
 
 -   `$p NAME_OF_SONG`
 
-Then, the bot will respond with an embeded message that will serve as the UI. The UI displays:
+Then, the bot will respond with an embedded message that will serve as the UI. The UI displays:
 
 -   The full playlist and the current track.
 -   The avatar image of the user that requested the current track.
