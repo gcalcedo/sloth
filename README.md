@@ -19,8 +19,9 @@ After meeting this requirements, follow this steps:
 
 1. **Clone** this repository.
 2. **Paste** your discord token in the **`config.json`** file.
-3. **Run `npm install`** to install all necessary dependencies.
-4. **Run `node .`** to start the bot.
+3. **Open** a terminal on the root folder of this project.
+4. **Run `npm install`** to install all necessary dependencies.
+5. **Run `node .`** to start the bot.
 
 Finally, Add a **bot** to your discord application and build an OAuth2 link with the **bot scope** and the following **permissions**.
 This can be done also through the [Discord Developer Portal](https://discord.com/developers/applications).
